@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search4Car - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #F2EFE7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+
+        .login-container {
+            width: 400px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .login-header {
+            background-color: #006A71;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .login-header p {
+            font-size: 14px;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .car-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .login-form {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #006A71;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 2px solid #9ACBD0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: #F2EFE7;
+        }
+
+        .form-group input:focus {
+            border-color: #48A6A7;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 166, 167, 0.2);
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 40px;
+            color: #48A6A7;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+            accent-color: #006A71;
+        }
+
+        .forgot-password a {
+            color: #48A6A7;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            background-color: #006A71;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .login-button:hover {
+            background-color: #00494e;
+        }
+
+        .skip-button {
+            width: 100%;
+            padding: 12px;
+            background-color: transparent;
+            color: #006A71;
+            border: 2px solid #9ACBD0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .skip-button:hover {
+            background-color: #F2EFE7;
+            border-color: #48A6A7;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: #48A6A7;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .road-line {
+            height: 5px;
+            background: repeating-linear-gradient(
+                to right,
+                #F2EFE7,
+                #F2EFE7 20px,
+                #006A71 20px,
+                #006A71 40px
+            );
+            margin-top: 20px;
+        }
+
+        .car-animation {
+            position: absolute;
+            bottom: -20px;
+            left: -50px;
+            font-size: 30px;
+            animation: drive 5s linear infinite;
+        }
+
+        @keyframes drive {
+            0% { transform: translateX(-50px); }
+            100% { transform: translateX(450px); }
+        }
+
+        .speedometer {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border: 3px solid #48A6A7;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #006A71;
+            background-color: #F2EFE7;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="car-icon">
+                <i class="fas fa-car-side"></i>
+            </div>
+            <h1>Search4Car</h1>
+            <p>We Filter. You Drive.</p>
+            <div class="speedometer">120</div>
+            <div class="car-animation">
+                <i class="fas fa-car"></i>
+            </div>
+        </div>
+        <div class="road-line"></div>
+        <div class="login-form">
+            <form action="search4carhome.html" method="get">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </div>
+                <button type="submit" class="login-button" onclick="handleLogin()">Start Engine <i class="fas fa-key"></i></button>
+                <button type="button" class="skip-button">Skip for Now <i class="fas fa-forward"></i></button>
+            </form>
+            <div class="signup-link">
+                Don't have an account? <a href="#">Sign up now</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username && password) {
+                
+                window.location.href = '';
+            } else {
+                alert('Please enter valid credentials.');
+            }
+        }
+    </script>
+</body>
+</html>

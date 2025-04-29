@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback | Search4Cars</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #006A71;
+            --primary-dark: #00494e;
+            --secondary: #48A6A7;
+            --accent: #9ACBD0;
+            --light: #F2EFE7;
+            --dark: #333333;
+            --gray: #94a3b8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .brand-icon {
+            font-size: 2.2rem;
+            color: var(--primary);
+        }
+        
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+        
+        .tagline {
+            font-style: italic;
+            color: var(--dark);
+            margin-top: 4px;
+            padding-left: 3.2rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 1rem;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item i {
+            width: 24px;
+            text-align: center;
+            color: var(--secondary);
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .nav-item:hover i, .nav-item.active i {
+            color: white;
+        }
+        
+        .quick-actions {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--light);
+        }
+        
+        .quick-actions-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .action-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--light);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .action-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+        }
+        
+        .top-bar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        /* Feedback Section Styles */
+        .feedback-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .feedback-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .feedback-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .feedback-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .feedback-subtitle {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .feedback-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,106,113,0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .rating-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .rating-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .rating-star {
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .rating-star:hover,
+        .rating-star.active {
+            color: #FFD700;
+        }
+        
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,106,113,0.3);
+        }
+        
+        .thank-you-message {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .thank-you-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .thank-you-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .thank-you-text {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 250px;
+                padding: 1.5rem;
+            }
+            
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                padding: 1rem;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .brand-name {
+                font-size: 1.5rem;
+            }
+            
+            .nav-menu {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+            
+            .nav-item {
+                white-space: nowrap;
+            }
+            
+            .quick-actions {
+                display: none;
+            }
+            
+            .feedback-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="fas fa-car brand-icon"></i>
+            <div>
+                <div class="brand-name">Search4Cars</div>
+                <div class="tagline">We Filter. You Drive.</div>
+            </div>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="featured.html" class="nav-item">
+                <i class="fas fa-star"></i>
+                <span>Featured</span>
+            </a>
+            <a href="searchforcarabout.html" class="nav-item">
+                <i class="fas fa-info-circle"></i>
+                <span>About</span>
+            </a>
+            <a href="search4carfeedback.html" class="nav-item active">
+                <i class="fas fa-comment-alt"></i>
+                <span>Feedback</span>
+            </a>
+        </nav>
+        
+        <div class="quick-actions">
+            <div class="quick-actions-title">Quick Actions</div>
+            <div class="action-buttons">
+                <button class="action-btn" title="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="action-btn" title="Scanner">
+                    <i class="fas fa-qrcode"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-bar">
+            <!-- Empty top bar after removing sign-in and wishlist options -->
+        </header>
+        
+        <div class="feedback-container">
+            <div class="feedback-header">
+                <h1 class="feedback-title">Share Your Feedback</h1>
+                <p class="feedback-subtitle">We value your opinion! Help us improve our services by sharing your experience.</p>
+            </div>
+            
+            <form id="feedbackForm" class="feedback-form">
+                <div class="form-group">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">How would you rate your experience?</label>
+                    <div class="rating-group">
+                        <span class="rating-label">Rating:</span>
+                        <div class="rating-stars">
+                            <i class="fas fa-star rating-star" data-rating="1"></i>
+                            <i class="fas fa-star rating-star" data-rating="2"></i>
+                            <i class="fas fa-star rating-star" data-rating="3"></i>
+                            <i class="fas fa-star rating-star" data-rating="4"></i>
+                            <i class="fas fa-star rating-star" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" id="rating" name="rating" value="0">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="feedback-type" class="form-label">Feedback Type</label>
+                    <select id="feedback-type" class="form-control">
+                        <option value="">Select feedback type</option>
+                        <option value="suggestion">Suggestion</option>
+                        <option value="compliment">Compliment</option>
+                        <option value="complaint">Complaint</option>
+                        <option value="bug">Bug Report</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message" class="form-label">Your Feedback</label>
+                    <textarea id="message" class="form-control" placeholder="Tell us about your experience..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Feedback</button>
+            </form>
+            
+            <div id="thankYouMessage" class="thank-you-message">
+                <div class="thank-you-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="thank-you-title">Thank You!</h2>
+                <p class="thank-you-text">We appreciate you taking the time to share your feedback with us.</p>
+                <a href="index.html" class="submit-btn">Back to Home</a>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Star rating functionality
+            const stars = document.querySelectorAll('.rating-star');
+            const ratingInput = document.getElementById('rating');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-rating');
+                    ratingInput.value = rating;
+                    
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseover', function() {
+                    const hoverRating = this.getAttribute('data-rating');
+                    
+                    stars.forEach((s, index) => {
+                        if (index < hoverRating) {
+                            s.classList.add('hover');
+                        } else {
+                            s.classList.remove('hover');
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseout', function() {
+                    stars.forEach(s => {
+                        s.classList.remove('hover');
+                    });
+                    
+                    // Restore selected rating
+                    const currentRating = ratingInput.value;
+                    stars.forEach((s, index) => {
+                        if (index < currentRating) {
+                            s.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Form submission
+            const feedbackForm = document.getElementById('feedbackForm');
+            const thankYouMessage = document.getElementById('thankYouMessage');
+            
+            feedbackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // In a real app, you would send the data to a server here
+                // For demo purposes, we'll just show the thank you message
+                feedbackForm.style.display = 'none';
+                thankYouMessage.style.display = 'block';
+                
+                // Reset form after submission
+                setTimeout(() => {
+                    feedbackForm.reset();
+                    stars.forEach(star => star.classList.remove('active'));
+                    ratingInput.value = '0';
+                    feedbackForm.style.display = 'block';
+                    thankYouMessage.style.display = 'none';
+                }, 5000);
+            });
+            
+            // Quick action buttons functionality
+            const searchBtn = document.querySelector('.action-btn:nth-child(1)');
+            const scannerBtn = document.querySelector('.action-btn:nth-child(2)');
+            
+            searchBtn.addEventListener('click', function() {
+                window.location.href = 'index.html#search';
+            });
+            
+            scannerBtn.addEventListener('click', function() {
+                alert('QR Scanner would open here in a real application!');
+            });
+        });
+    </script>
+</body>
+</html>

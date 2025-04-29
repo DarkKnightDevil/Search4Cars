@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search4Cars - Find Your Dream Ride</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #F2EFE7;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Background Car with Low Opacity */
+        .background-car {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center/cover;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Main Content */
+        .landing-content {
+            text-align: center;
+            z-index: 10;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        /* Title & Tagline Styling */
+        .title {
+            font-size: 5rem;
+            font-weight: 900;
+            color: #006A71;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 #9ACBD0;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: #48A6A7;
+            font-style: italic;
+            margin-bottom: 2.5rem;
+            letter-spacing: 2px;
+        }
+
+        /* Get Started Button with Engine Animation */
+        .get-started-btn {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #006A71, #48A6A7);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s;
+            box-shadow: 0 5px 15px rgba(0, 106, 113, 0.4);
+            z-index: 1;
+        }
+
+        .get-started-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 106, 113, 0.6);
+        }
+
+        .get-started-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .get-started-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Low-Opacity Car Background -->
+    <div class="background-car"></div>
+
+    <!-- Main Content -->
+    <div class="landing-content">
+        <h1 class="title">Search4Cars</h1>
+        <p class="tagline">We Filter. You Drive.</p>
+        <a href="search4carlogin.html" class="get-started-btn">
+            Get Started <i class="fas fa-chevron-right"></i>
+        </a>
+        
+    </div>
+
+    <!-- JavaScript for Button Effect -->
+    <script>
+        // Button Animation on Click (Engine Revving Effect)
+        const getStartedBtn = document.querySelector('.get-started-btn');
+        getStartedBtn.addEventListener('click', () => {
+            getStartedBtn.innerHTML = 'Vroom! <i class="fas fa-car"></i>';
+            getStartedBtn.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                getStartedBtn.innerHTML = 'Get Started <i class="fas fa-chevron-right"></i>';
+                getStartedBtn.style.transform = 'scale(1)';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Search4Cars</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --light: #F2EFE7;
+            --accent: #9ACBD0;
+            --secondary: #48A6A7;
+            --primary: #006A71;
+            --dark: #333333;
+            --gray: #94a3b8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .brand-icon {
+            font-size: 2.2rem;
+            color: var(--primary);
+        }
+        
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+        
+        .tagline {
+            font-style: italic;
+            color: var(--dark);
+            margin-top: 4px;
+            padding-left: 3.2rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 1rem;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item i {
+            width: 24px;
+            text-align: center;
+            color: var(--secondary);
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .nav-item:hover i, .nav-item.active i {
+            color: white;
+        }
+        
+        /* Search Dropdown Styles */
+        .search-container {
+            margin-top: auto;
+            position: relative;
+        }
+        
+        .search-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: var(--light);
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            width: 100%;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .search-btn:hover i {
+            color: white;
+        }
+        
+        .search-dropdown {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .search-container:hover .search-dropdown {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .budget-option {
+            padding: 12px 16px;
+            color: var(--dark);
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s;
+        }
+        
+        .budget-option:hover {
+            background: var(--light);
+            color: var(--primary);
+            padding-left: 20px;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 3rem;
+        }
+        
+        .about-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .about-title {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .about-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .about-subtitle {
+            color: var(--gray);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .about-content {
+            background: white;
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .mission-section {
+            margin-bottom: 3rem;
+        }
+        
+        .mission-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .mission-text.highlight {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--primary);
+            font-style: italic;
+            border-left: 3px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .values-section {
+            margin-top: 3rem;
+        }
+        
+        .values-title {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .value-card {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .value-icon {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .value-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 250px;
+                padding: 1.5rem;
+            }
+            
+            .main-content {
+                margin-left: 250px;
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                padding: 1rem;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            
+            .brand-name {
+                font-size: 1.5rem;
+            }
+            
+            .nav-menu {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+            
+            .nav-item {
+                white-space: nowrap;
+            }
+            
+            .search-container {
+                display: none;
+            }
+            
+            .about-title {
+                font-size: 2rem;
+            }
+            
+            .about-content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="fas fa-car brand-icon"></i>
+            <div>
+                <div class="brand-name">Search4Cars</div>
+                <div class="tagline">We Filter. You Drive.</div>
+            </div>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="search4carhome.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="bestseller.html" class="nav-item">
+                <i class="fas fa-star"></i>
+                <span>Bestseller</span>
+            </a>
+            <a href="search4carfeedback.html" class="nav-item">
+                <i class="fas fa-comment-alt"></i>
+                <span>Feedback</span>
+            </a>
+            <a href="searchforcarabout.html" class="nav-item active">
+                <i class="fas fa-info-circle"></i>
+                <span>About</span>
+            </a>
+        </nav>
+        
+        <div class="search-container">
+            <button class="search-btn">
+                <i class="fas fa-search"></i>
+                <span>Search</span>
+            </button>
+            <div class="search-dropdown">
+                <a href="search4carunder6lakhs.html" class="budget-option">Under ₹6 Lakh</a>
+                <a href="search4carunder7-10lakhs.html" class="budget-option">₹6-10 Lakh</a>
+                <a href="#" class="budget-option">₹11-15 Lakh</a>
+                <a href="#" class="budget-option">Above ₹15 Lakh</a>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="about-container">
+            <div class="about-header">
+                <h1 class="about-title">About Search4Cars</h1>
+                <p class="about-subtitle">Simplifying your car buying journey with smart filters and personalized results</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="mission-section">
+                    <p class="mission-text">
+                        At Search4Cars, we make car shopping smarter, easier, and tailored just for you. Our platform filters vehicles based on your unique needs, preferences, and budget — no more endless scrolling or guesswork. Whether you're looking for fuel efficiency, advanced features, space for the family, or your dream weekend ride, we show you only what truly fits.
+                    </p>
+                    
+                    <p class="mission-text highlight">
+                        We don't just show you cars. We show you your car.
+                    </p>
+                    
+                    <p class="mission-text">
+                        With detailed specs, real insights, and clear comparisons, you get everything you need to make a confident decision — all in one place.
+                    </p>
+                </div>
+                
+                <div class="values-section">
+                    <h2 class="values-title">
+                        <i class="fas fa-heart"></i>
+                        <span>Our Core Values</span>
+                    </h2>
+                    
+                    <div class="values-grid">
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h3 class="value-title">Personalized Matching</h3>
+                            <p>We understand that every driver has unique needs. Our algorithms match you with vehicles that fit your lifestyle, not just your budget.</p>
+                        </div>
+                        
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <h3 class="value-title">Complete Car Details</h3>
+                            <p>We provide full detailed information for every car - from engine specs to ownership costs, so you know exactly what you're getting.</p>
+                        </div>
+                        
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h3 class="value-title">Time-Saving</h3>
+                            <p>We eliminate the frustration of browsing hundreds of listings. Our smart filters deliver relevant results in seconds.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cars Under ₹6 Lakh</title>
+  <style>
+    :root {
+      --bg: #F2EFE7;         /* Light beige background */
+      --primary: #9ACBD0;     /* Light teal for headers */
+      --secondary: #48A6A7;   /* Medium teal for borders */
+      --text: #006A71;       /* Dark teal for text */
+      --highlight: #e0f0f1;  /* Lightest teal for highlights */
+      --accent: #003d42;     /* Darkest teal for accents */
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: var(--primary);
+      color: var(--accent);
+      padding: 25px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border-bottom: 3px solid var(--secondary);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      padding: 30px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .car-card {
+      background: white;
+      border: 2px solid var(--secondary);
+      border-radius: 12px;
+      width: 30%;
+      min-width: 280px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .car-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border-color: var(--accent);
+    }
+
+    .car-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 2px solid var(--secondary);
+      transition: transform 0.4s ease;
+    }
+
+    .car-card:hover img {
+      transform: scale(1.03);
+    }
+
+    .car-card h2 {
+      margin: 15px;
+      color: var(--accent);
+      font-size: 22px;
+      text-align: center;
+      position: relative;
+    }
+
+    .car-card h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--secondary);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    th {
+      background: var(--primary);
+      color: var(--accent);
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+      background: white;
+    }
+
+    tr:nth-child(even) td {
+      background: var(--highlight);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    @media (max-width: 900px) {
+      .car-card {
+        width: 45%;
+      }
+      
+      header {
+        font-size: 22px;
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .car-card {
+        width: 100%;
+      }
+      
+      header {
+        font-size: 20px;
+        padding: 18px;
+      }
+      
+      .car-card h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>Top Cars Under 6 Lakhs</header>
+
+<div class="container">
+
+  <!-- Maruti Spresso -->
+  <div class="car-card">
+    <a href="search4carmrutispresso.html" style="display: block; text-decoration: none; color: inherit;">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGWErsCsDw9Nl7F--tl0H4MHdSUQkDA-lo9w&s" alt="Maruti S-Presso">
+    <h2>Maruti S-Presso</h2>
+    <table>
+        <tr><th>Manufacturer</th><td>Maruti Suzuki</td></tr>
+        <tr><th>Model</th><td>S-Presso</td></tr>
+        <tr><th>Segment</th><td>Compact Crossover Hatchback</td></tr>
+        <tr><th>Fuel Type</th><td>Petrol / CNG</td></tr>
+        <tr><th>Transmission</th><td>5-Speed Manual / 5-Speed AMT</td></tr>
+        <tr><th>Price (Ex-showroom)</th><td>₹4.26 – ₹6.12 lakh</td></tr>
+      </table>
+    
+  </div>
+
+  <!-- Tata Altroz -->
+  <div class="car-card">
+    <a href="search4carkwid.html" style="display: block; text-decoration: none; color: inherit;">
+    <img src="https://static.caronphone.com/public/brands/32/90/255/255_1709382566.webp"alt=""Tata Altroz">
+    <h2>Renault Kwid</h2>
+    <table>
+        <tr><th>Manufacturer</th><td>Renault</td></tr>
+        <tr><th>Model</th><td>Kwid</td></tr>
+        <tr><th>Segment</th><td>Compact Hatchback</td></tr>
+        <tr><th>Fuel Type</th><td>Petrol</td></tr>
+        <tr><th>Transmission</th><td>5-Speed Manual / 5-Speed AMT</td></tr>
+        <tr><th>Price (Ex-showroom)</th><td>₹4.69 – ₹6.45 lakh</td></tr>
+      </table>
+  </div>
+
+  <!-- Alto K10 -->
+  <div class="car-card">
+    <a href="search4caraltok10.html" style="display: block; text-decoration: none; color: inherit;">
+    <img src="https://ic4.maxabout.us/autos/cars_india//2/2014/11/2015-maruti-alto-k10-red.jpg" alt="Hyundai Venue">
+    <h2>Alto K10</h2>
+    <table>
+      <tr><th>Manufacturer</th><td>Maruti Suzuki</td></tr>
+      <tr><th>Model</th><td>Alto K10</td></tr>
+      <tr><th>Segment</th><td>Hatchback</td></tr>
+      <tr><th>Fuel Type</th><td>Petrol / CNG</td></tr>
+      <tr><th>Transmission</th><td>5-speed Manual / AMT</td></tr>
+      <tr><th>Price (Ex-showroom)</th><td>₹3.99 – ₹5.96 lakh</td></tr>
+    </table>
+  </div>
+
+  <!-- Tata Nexon -->
+  <div class="car-card">
+    <a href="serch4careeco.html" style="display: block; text-decoration: none; color: inherit;">
+    <img src="https://shivamautozone.com/wp-content/uploads/2023/08/eeco-silver.png" alt="Maruti Eeco">
+    <h2>Maruti Suzuki Eeco</h2>
+    <table>
+      <tr><th>Manufacturer</th><td>Maruti Suzuki</td></tr>
+      <tr><th>Model</th><td>Eeco</td></tr>
+      <tr><th>Segment</th><td>Compact MPV</td></tr>
+      <tr><th>Fuel Type</th><td>Petrol / CNG</td></tr>
+      <tr><th>Transmission</th><td>5-Speed Manual</td></tr>
+      <tr><th>Price (Ex-showroom)</th><td>₹4.63 – ₹5.73 lakh</td></tr>
+    </table>
+  </div>
+
+  <!-- Tata Altroz -->
+  <div class="car-card">
+    <a href="search4caraltroz.html" style="display: block; text-decoration: none; color: inherit;">
+    <img src="https://s7ap1.scene7.com/is/image/tatamotors/RacerOrange-0-1?$PO-750-500-S$&fit=crop&fmt=webp-alpha" alt="Tata Altroz">
+    <h2>Tata Altroz</h2>
+    <table>
+      <tr><th>Manufacturer</th><td>Tata Motors</td></tr>
+      <tr><th>Model</th><td>Altroz</td></tr>
+      <tr><th>Segment</th><td>Premium Hatchback</td></tr>
+      <tr><th>Fuel Type</th><td>Petrol / Diesel / CNG</td></tr>
+      <tr><th>Transmission</th><td>5-Speed Manual / 7-Speed Dual-Clutch Transmission (DCT)</td></tr>
+      <tr><th>Price (Ex-showroom)</th><td>₹5.69 – ₹10.69 lakh</td></tr>
+    </table>
+  </div>
+
+</div>
+
+</body>
+</html>

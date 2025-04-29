@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search4Cars | Find Your Perfect Ride</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --light: #F2EFE7;
+            --accent: #9ACBD0;
+            --secondary: #48A6A7;
+            --primary: #006A71;
+            --dark: #333333;
+            --gray: #94a3b8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            display: flex;
+            min-height: 100vh;
+            scroll-behavior: smooth; /* Added for smooth scrolling */
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .brand-icon {
+            font-size: 2.2rem;
+            color: var(--primary);
+        }
+        
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+        
+        .tagline {
+            font-style: italic;
+            color: var(--dark);
+            margin-top: 4px;
+            padding-left: 3.2rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 1rem;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item i {
+            width: 24px;
+            text-align: center;
+            color: var(--secondary);
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .nav-item:hover i, .nav-item.active i {
+            color: white;
+        }
+        
+        /* Search Dropdown Styles */
+        .search-container {
+            margin-top: auto;
+            position: relative;
+        }
+        
+        .search-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: var(--light);
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            width: 100%;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .search-btn:hover i {
+            color: white;
+        }
+        
+        .search-dropdown {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .search-container:hover .search-dropdown {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .budget-option {
+            padding: 12px 16px;
+            color: var(--dark);
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s;
+        }
+        
+        .budget-option:hover {
+            background: var(--light);
+            color: var(--primary);
+            padding-left: 20px;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 2rem;
+            transition: all 0.3s ease; /* Added for smooth transition */
+        }
+        
+        .facts-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .facts-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .fact-category {
+            margin-bottom: 2rem;
+        }
+        
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .fact-list {
+            list-style-type: none;
+        }
+        
+        .fact-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed var(--light);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .fact-item:last-child {
+            border-bottom: none;
+        }
+        
+        .fact-icon {
+            color: var(--primary);
+            margin-top: 3px;
+        }
+        
+        /* Bestseller Cars Section */
+        .bestseller-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .car-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .car-image {
+            height: 160px;
+            overflow: hidden;
+        }
+        
+        .car-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .car-card:hover .car-image img {
+            transform: scale(1.05);
+        }
+        
+        .car-details {
+            padding: 1.2rem;
+        }
+        
+        .car-make {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+        
+        .car-model {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .car-tagline {
+            font-style: italic;
+            color: var(--gray);
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+        
+        .car-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            padding: 2rem;
+            position: relative;
+            transform: translateY(20px);
+            transition: all 0.3s;
+        }
+        
+        .popup-overlay.active .popup-content {
+            transform: translateY(0);
+        }
+        
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-popup:hover {
+            color: var(--primary);
+        }
+        
+        .popup-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .popup-features {
+            margin-top: 1.5rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-icon {
+            color: var(--secondary);
+            margin-top: 3px;
+        }
+        
+        /* AI Scan Popup Specific Styles */
+        .ai-popup-content {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+        
+        .ai-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .coming-soon-text {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .ai-description {
+            color: var(--dark);
+            margin-bottom: 2rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 250px;
+                padding: 1.5rem;
+            }
+            
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                padding: 1rem;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            
+            .brand-name {
+                font-size: 1.5rem;
+            }
+            
+            .nav-menu {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+            
+            .nav-item {
+                white-space: nowrap;
+            }
+            
+            .search-container {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .cars-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="fas fa-car brand-icon"></i>
+            <div>
+                <div class="brand-name">Search4Cars</div>
+                <div class="tagline">We Filter. You Drive.</div>
+            </div>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="#" class="nav-item active" onclick="scrollToTop()">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#bestseller" class="nav-item" onclick="scrollToBestseller()">
+                <i class="fas fa-star"></i>
+                <span>Bestseller</span>
+            </a>
+            <a href="search4carfeedback.html" class="nav-item">
+                <i class="fas fa-comment-alt"></i>
+                <span>Feedback</span>
+            </a>
+            <a href="/searchforcarabout.html" class="nav-item">
+                <i class="fas fa-info-circle"></i>
+                <span>About</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showAiPopup()">
+                <i class="fas fa-robot"></i>
+                <span>Scan Car(AI)</span>
+            </a>
+        </nav>
+        
+        <div class="search-container">
+            <button class="search-btn">
+                <i class="fas fa-search"></i>
+                <span>Search</span>
+            </button>
+            <div class="search-dropdown">
+                <a href="search4carunder6lakhs.html" class="budget-option">Under ₹6 Lakh</a>
+                <a href="search4carunder7-10lakhs.html" class="budget-option">₹6-10 Lakh</a>
+                <a href="#" class="budget-option">₹11-15 Lakh</a>
+                <a href="#" class="budget-option">Above ₹15 Lakh</a>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="facts-container">
+            <div class="facts-section">
+                <h2 class="section-title">Interesting Car Facts</h2>
+                
+                <div class="fact-category">
+                    <h3 class="category-title">
+                        <i class="fas fa-car"></i>
+                        <span>General Car Facts</span>
+                    </h3>
+                    <ul class="fact-list">
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>The first car was made in 1886 by Karl Benz — the Benz Patent-Motorwagen.</span>
+                        </li>
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>There are over 1.4 billion cars on the road globally (and growing).</span>
+                        </li>
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>The average car has over 30,000 parts, including tiny screws and bolts.</span>
+                        </li>
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>Electric vehicles (EVs) actually predate gasoline cars — EVs were popular in the late 1800s.</span>
+                        </li>
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>The Toyota Corolla is the world's best-selling car, with over 50 million sold since 1966.</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="fact-category">
+                    <h3 class="category-title">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Fun & Surprising</span>
+                    </h3>
+                    <ul class="fact-list">
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>A modern F1 car can drive upside down in a tunnel due to its aerodynamic downforce.</span>
+                        </li>
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>The longest-lasting car is a 1966 Volvo P1800 that clocked over 3 million miles.</span>
+                        </li>
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>Cars spend 95% of their lifetime parked.</span>
+                        </li>
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>Cruise control was invented by a blind man, Ralph Teetor, in the 1940s.</span>
+                        </li>
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>The fastest production car (as of 2024) is the Bugatti Chiron Super Sport 300+, hitting over 300 mph.</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="fact-category">
+                    <h3 class="category-title">
+                        <i class="fas fa-bolt"></i>
+                        <span>EV & Future Facts</span>
+                    </h3>
+                    <ul class="fact-list">
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>Electric cars have fewer moving parts than gas cars — leading to less maintenance.</span>
+                        </li>
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>Some EVs can charge up to 80% in 15–30 minutes with ultra-fast chargers.</span>
+                        </li>
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>Autonomous cars use sensors, LiDAR, and AI to "see" and make decisions in real-time.</span>
+                        </li>
+                        <li class="fact-item">
+                            <i class="fas fa-circle fact-icon"></i>
+                            <span>Tesla didn't invent the EV, but it made it cool and mass-market viable.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bestseller Cars Section -->
+            <div id="bestseller" class="bestseller-section">
+                <h2 class="section-title">Bestseller Cars</h2>
+                <div class="cars-grid">
+                    <!-- Maruti Swift -->
+                    <div class="car-card" onclick="showPopup('swift')">
+                        <div class="car-image">
+                            <a href="https://example.com/swift" target="_blank">
+                                <img src="swift.jpg" alt="Maruti Swift">
+                            </a>
+                        </div>
+                        <div class="car-details">
+                            <div class="car-make">Maruti Suzuki</div>
+                            <div class="car-model">Swift</div>
+                            <div class="car-tagline">"India's favorite hatchback - Sporty, efficient & fun to drive"</div>
+                            <div class="car-price">₹6.49 Lakh onwards</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tata Altroz -->
+                    <div class="car-card" onclick="showPopup('altroz')">
+                        <div class="car-image">
+                            <img src="https://www.carbike360.com/_next/image?url=https%3A%2F%2Fdelen.s3.ap-southeast-1.amazonaws.com%2Fsmall_altroz_e4271eb6f2.jpg&w=3840&q=75" alt="Tata Altroz">
+                        </div>
+                        <div class="car-details">
+                            <div class="car-make">Tata</div>
+                            <div class="car-model">Altroz</div>
+                            <div class="car-tagline">"Premium hatchback with 5-star safety & bold design"</div>
+                            <div class="car-price">₹6.60 Lakh onwards</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hyundai Creta -->
+                    <div class="car-card" onclick="showPopup('creta')">
+                        <div class="car-image">
+                            <img src="https://www.hyundai.com/content/dam/hyundai/in/en/data/find-a-car/Creta/Highlights/mob/cretagalleryb2.jpg" alt="Hyundai Creta">
+                        </div>
+                        <div class="car-details">
+                            <div class="car-make">Hyundai</div>
+                            <div class="car-model">Creta</div>
+                            <div class="car-tagline">"India's most loved SUV with premium features"</div>
+                            <div class="car-price">₹11.00 Lakh onwards</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Popup Overlays -->
+    <div id="swift-popup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-popup" onclick="hidePopup('swift')">&times;</span>
+            <h3 class="popup-title">Maruti Suzuki Swift</h3>
+            <p>"India's favorite hatchback - Sporty, efficient & fun to drive"</p>
+            <div class="popup-features">
+                <div class="feature-item">
+                    <i class="fas fa-tachometer-alt feature-icon"></i>
+                    <div>
+                        <strong>Mileage:</strong> 23.2 kmpl (Petrol) - One of the most fuel-efficient cars in its segment
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-cogs feature-icon"></i>
+                    <div>
+                        <strong>Performance:</strong> 1.2L K-Series engine with 89 bhp - Perfect balance of power and efficiency
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bolt feature-icon"></i>
+                    <div>
+                        <strong>Special Feature:</strong> Comes with AMT (Auto Gear Shift) option - Easy city driving
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="altroz-popup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-popup" onclick="hidePopup('altroz')">&times;</span>
+            <h3 class="popup-title">Tata Altroz</h3>
+            <p>"Premium hatchback with 5-star safety & bold design"</p>
+            <div class="popup-features">
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <div>
+                        <strong>Safety:</strong> 5-star Global NCAP rating - One of the safest cars in India
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-car feature-icon"></i>
+                    <div>
+                        <strong>Build Quality:</strong> Impact-resistant body structure with high-strength steel
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-gem feature-icon"></i>
+                    <div>
+                        <strong>Special Feature:</strong> Premium interior with floating 7-inch touchscreen
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="creta-popup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-popup" onclick="hidePopup('creta')">&times;</span>
+            <h3 class="popup-title">Hyundai Creta</h3>
+            <p>"India's most loved SUV with premium features"</p>
+            <div class="popup-features">
+                <div class="feature-item">
+                    <i class="fas fa-sun feature-icon"></i>
+                    <div>
+                        <strong>Features:</strong> Panoramic sunroof, ventilated seats, and 10.25-inch touchscreen
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-tachometer-alt feature-icon"></i>
+                    <div>
+                        <strong>Engine Options:</strong> 1.5L petrol, 1.5L diesel & 1.4L turbo petrol - Versatile powertrains
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-robot feature-icon"></i>
+                    <div>
+                        <strong>Special Feature:</strong> Advanced ADAS (Level 2 autonomous driving) in top variants
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- AI Scan Popup -->
+    <div id="ai-popup" class="popup-overlay">
+        <div class="popup-content ai-popup-content">
+            <span class="close-popup" onclick="hidePopup('ai')">&times;</span>
+            <div class="ai-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h3 class="coming-soon-text">Coming Soon!</h3>
+            <p class="ai-description">Our AI-powered car scanning feature is currently in development.</p>
+            <p>This innovative tool will allow you to scan any car and get instant details about its make, model, features, and estimated value.</p>
+            <p>Stay tuned for this exciting new feature!</p>
+        </div>
+    </div>
+    
+    <script>
+        // Popup functionality
+        function showPopup(car) {
+            document.getElementById(car + '-popup').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hidePopup(car) {
+            document.getElementById(car + '-popup').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // AI Popup functionality
+        function showAiPopup() {
+            document.getElementById('ai-popup').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            return false; // Prevent default link behavior
+        }
+        
+        function hideAiPopup() {
+            document.getElementById('ai-popup').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Smooth scroll to bestseller section
+        function scrollToBestseller() {
+            const bestsellerSection = document.getElementById('bestseller');
+            bestsellerSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            return false; // Prevent default anchor behavior
+        }
+        
+        // Scroll to top for Home button
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            return false; // Prevent default anchor behavior
+        }
+        
+        // Close popup when clicking outside content
+        document.querySelectorAll('.popup-overlay').forEach(popup => {
+            popup.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+        
+        // Close popup with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.popup-overlay').forEach(popup => {
+                    popup.classList.remove('active');
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
